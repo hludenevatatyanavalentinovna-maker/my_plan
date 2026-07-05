@@ -207,6 +207,14 @@ function createDayColumn(day) {
   return column;
 }
 
+function shouldEnableNativeDrag() {
+  if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
+    return true;
+  }
+
+  return !window.matchMedia("(max-width: 767px)").matches;
+}
+
 function createTaskCard(task) {
   const category = getCategory(task.category || DEFAULT_CATEGORY_ID);
   const isCrossedOut = task.category === "done" || task.isCrossedOut === true;
@@ -215,8 +223,8 @@ function createTaskCard(task) {
   const card = document.createElement("article");
   card.className = `task-card ${category.className}${isCrossedOut ? " task-card--crossed-out" : ""}`;
   card.dataset.taskId = task.id || "";
-  card.draggable = true;
-  card.setAttribute("draggable", "true");
+  card.draggable = shouldEnableNativeDrag();
+  card.setAttribute("draggable", String(card.draggable));
 
   const actions = document.createElement("div");
   actions.className = "task-card__actions";
