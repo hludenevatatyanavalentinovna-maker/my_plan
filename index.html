@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Еженедельный планировщик задач</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="top-panel">
+      <div class="top-panel__text">
+        <p class="eyebrow">План на неделю</p>
+        <h1>Еженедельный планировщик задач</h1>
+        <p class="subtitle">Распределяйте задачи по дням и категориям без лишнего шума.</p>
+      </div>
+
+      <div class="top-panel__actions" aria-label="Действия планировщика">
+        <button class="button button--primary" id="new-task-button" type="button">Новая задача</button>
+        <button class="button button--secondary" id="trash-button" type="button">
+          Корзина
+          <span class="button__counter" aria-label="Задач в корзине">0</span>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <section class="week-grid" aria-label="Неделя"></section>
+    </main>
+  </div>
+
+  <div class="modal hidden" id="task-modal" role="dialog" aria-modal="true" aria-labelledby="task-modal-title">
+    <div class="modal__content">
+      <div class="modal__header">
+        <h2 id="task-modal-title">Новая задача</h2>
+        <button class="modal__close" type="button" aria-label="Закрыть окно создания задачи">×</button>
+      </div>
+
+      <form class="task-form" id="task-form" novalidate>
+        <label class="form-field" for="task-title">
+          <span>Название</span>
+          <input id="task-title" name="title" type="text" maxlength="120" required>
+        </label>
+        <p class="form-error" id="task-title-error" aria-live="polite"></p>
+
+        <label class="form-field" for="task-description">
+          <span>Описание</span>
+          <textarea id="task-description" name="description" maxlength="1000" rows="4"></textarea>
+        </label>
+
+        <div class="form-grid">
+          <label class="form-field" for="task-day">
+            <span>День недели</span>
+            <select id="task-day" name="day" required></select>
+          </label>
+
+          <label class="form-field" for="task-category">
+            <span>Категория</span>
+            <select id="task-category" name="category" required></select>
+          </label>
+        </div>
+
+        <div class="form-grid">
+          <label class="form-field" for="task-deadline">
+            <span>Дедлайн</span>
+            <input id="task-deadline" name="deadline" type="date">
+          </label>
+
+          <label class="form-field" for="task-delegated-to">
+            <span>Кому делегировано</span>
+            <input id="task-delegated-to" name="delegatedTo" type="text" maxlength="120">
+          </label>
+        </div>
+
+        <div class="form-actions">
+          <button class="button button--secondary" id="cancel-task-button" type="button">Отмена</button>
+          <button class="button button--primary" type="submit">Сохранить</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal hidden" id="trash-modal" role="dialog" aria-modal="true" aria-labelledby="trash-modal-title">
+    <div class="modal__content">
+      <div class="modal__header">
+        <h2 id="trash-modal-title">Корзина</h2>
+        <button class="modal__close" type="button" aria-label="Закрыть корзину">×</button>
+      </div>
+
+      <div class="trash-list" id="trash-list"></div>
+      <div class="empty-state trash-empty" id="trash-empty">Корзина пуста</div>
+
+      <div class="form-actions">
+        <button class="button button--secondary" id="clear-trash-button" type="button">Очистить корзину</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
